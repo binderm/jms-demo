@@ -8,6 +8,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import java.util.Random;
+
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
 @Stateless
@@ -18,6 +20,16 @@ public class BillBoundaryImpl implements BillBoundary {
 
     @Override
     public void createBill(Order order) {
+        randomDelay(2000);
         customerNotifier.billAvailable(order.getOrderId());
+    }
+
+    private void randomDelay(int maxMs) {
+        Random random = new Random();
+        int delay = random.nextInt(maxMs);
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException ignore) {
+        }
     }
 }
