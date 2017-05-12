@@ -1,0 +1,4 @@
+rootProject.name = 'jms-demo'
+include 'shopping'
+include 'shipping'
+include 'billing'
