@@ -19,6 +19,6 @@ public class ShippingBoundaryImpl implements ShippingBoundary {
 
     @Override
     public void prepareShipping(Order order) {
-        customerNotifier.shippingStateChanged(order.getOrderId(), ShippingState.PREPARED_FOR_SHIPPING);
+        customerNotifier.shippingStateChanged(order.getOrderId(), ShippingState.SHIPPING_ISSUED);
     }
 }

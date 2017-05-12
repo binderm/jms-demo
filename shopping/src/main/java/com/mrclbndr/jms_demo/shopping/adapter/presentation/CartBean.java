@@ -6,7 +6,7 @@ import com.mrclbndr.jms_demo.shopping.domain.MessageType;
 import com.mrclbndr.jms_demo.shopping.domain.Order;
 import com.mrclbndr.jms_demo.shopping.domain.SenderConfiguration;
 
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -15,21 +15,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Named("cart")
-@ViewScoped
-public class CartBean implements Serializable {
-    private static final long serialVersionUID = -2259480930743279507L;
-
+@RequestScoped
+public class CartBean {
     @Inject
     private OrderBoundary orderBoundary;
 
     private final SenderConfiguration configuration;
-    private final List<Order> sentOrders;
     private int orderCount;
+    private List<Order> sentOrders;
 
     public CartBean() {
         this.orderCount = 1;
         this.configuration = new SenderConfiguration();
-        this.sentOrders = new LinkedList<>();
     }
 
     public int getOrderCount() {
@@ -53,11 +50,13 @@ public class CartBean implements Serializable {
     }
 
     public List<Order> getSentOrders() {
+        if (sentOrders == null) {
+            sentOrders = orderBoundary.getAllOrders();
+        }
         return sentOrders;
     }
 
     public void simulateCheckouts() {
-        List<Order> sentOrders = orderBoundary.simulateOrders(orderCount, configuration);
-        this.sentOrders.addAll(0, sentOrders);
+        orderBoundary.simulateOrders(orderCount, configuration);
     }
 }

@@ -9,6 +9,7 @@
 </h:head>
 <h:body>
     <div class="container">
+        <h1>Shop System</h1>
         <h:form>
             <div class="form-group">
                 <h:outputLabel for="destination" value="Destination"/>
@@ -32,14 +33,20 @@
                 <h:inputText value="#{cart.orderCount}" placeholder="Order count" id="order-count" styleClass="form-control form-control-sm"/>
 
                 <span class="input-group-btn">
-                <h:commandButton action="#{cart.simulateCheckouts}" value="Checkout" styleClass="btn btn-primary"/>
+                <h:commandButton action="#{cart.simulateCheckouts}" value="Produce orders" styleClass="btn btn-primary"/>
                 </span>
             </div>
         </h:form>
 
-        <h:dataTable value="#{cart.sentOrders}" var="sentOrder" styleClass="table table-sm">
+        <h:dataTable value="#{cart.sentOrders}" var="order" styleClass="table table-sm">
             <h:column>
-                <h:outputText value="#{sentOrder.orderId}"/>
+                <h:outputText value="#{order.orderId}"/>
+            </h:column>
+            <h:column>
+                <h:outputText value="#{order.billAvailable}"/>
+            </h:column>
+            <h:column>
+                <h:outputText value="#{order.shippingState}"/>
             </h:column>
         </h:dataTable>
     </div>

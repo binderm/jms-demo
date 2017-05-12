@@ -6,6 +6,7 @@ public class ReceiverConfiguration {
     private String subscriptionName;
     private boolean durable;
     private boolean shared;
+    private int orderCount;
 
     public Destination getDestination() {
         return destination;
@@ -45,5 +46,13 @@ public class ReceiverConfiguration {
 
     public void setShared(boolean shared) {
         this.shared = shared;
+    }
+
+    public int getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(int orderCount) {
+        this.orderCount = orderCount;
     }
 }

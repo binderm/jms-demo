@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Named("shipping")
 @ViewScoped
-public class ShippingBean implements Serializable {
+public class PrepareShippingBean implements Serializable {
     private static final long serialVersionUID = -8703295537807242811L;
 
     @Inject
@@ -30,7 +30,7 @@ public class ShippingBean implements Serializable {
 
     private final List<Order> receivedOrders;
 
-    public ShippingBean() {
+    public PrepareShippingBean() {
         this.orderCount = 1;
         this.configuration = new ReceiverConfiguration();
         this.receivedOrders = new LinkedList<>();
