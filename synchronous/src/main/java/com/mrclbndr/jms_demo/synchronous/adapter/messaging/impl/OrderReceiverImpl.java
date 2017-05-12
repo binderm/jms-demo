@@ -8,6 +8,7 @@ import com.mrclbndr.jms_demo.synchronous.domain.ReceiverConfiguration;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @Stateless
 public class OrderReceiverImpl implements OrderReceiver {
     @Inject
+    @JMSConnectionFactory("jms/SynchronousConnectionFactory")
     private JMSContext jmsContext;
 
     @Resource(lookup = "jms/NewOrdersQueue")

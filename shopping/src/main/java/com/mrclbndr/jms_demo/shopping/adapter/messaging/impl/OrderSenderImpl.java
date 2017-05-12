@@ -2,8 +2,8 @@ package com.mrclbndr.jms_demo.shopping.adapter.messaging.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mrclbndr.jms_demo.shopping.domain.Order;
 import com.mrclbndr.jms_demo.shopping.adapter.messaging.api.OrderSender;
+import com.mrclbndr.jms_demo.shopping.domain.Order;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -22,7 +22,7 @@ public class OrderSenderImpl implements OrderSender {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void sendOrder(Order order) {
+    public void send(Order order) {
         try {
             String json = toJson(order);
             jmsContext.createProducer().send(newOrders, json);
