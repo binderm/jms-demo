@@ -48,18 +48,23 @@
             <div class="row">
                 <div class="form-group col">
                     <h:outputLabel for="timeout" value="Timeout"/>
-                    <h:selectOneMenu value="#{receiver.configuration.timeout}" id="timeout" styleClass="form-control form-control-sm">
+                    <h:selectOneMenu value="#{receiver.configuration.timeout}" id="timeout"
+                                     styleClass="form-control form-control-sm">
                         <f:selectItems value="#{values.availableTimeouts}"/>
                     </h:selectOneMenu>
                 </div>
 
                 <div class="input-group">
-                    <h:inputText value="#{receiver.configuration.orderCount}" placeholder="Order count" id="order-count" styleClass="form-control form-control-sm"/>
+                    <h:inputText value="#{receiver.configuration.orderCount}" placeholder="Order count" id="order-count"
+                                 styleClass="form-control form-control-sm"/>
 
                     <span class="input-group-btn">
-                <h:commandButton action="#{receiver.receiveNewOrders}" value="Receive orders" styleClass="btn btn-primary"/>
-                </span>
+                        <h:commandButton action="#{receiver.receiveNewOrders}" value="Receive orders"
+                                         styleClass="btn btn-primary"/>
+                    </span>
                 </div>
+
+                <h:commandButton action="#{sender.clearSentOrders}" value="Clear" styleClass="btn btn-sm btn-secondary"/>
             </div>
         </h:form>
 

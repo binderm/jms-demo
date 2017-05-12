@@ -18,39 +18,15 @@ public class OrderConverter {
 
     public Order toOrder(Message message) {
         try {
-            if (message instanceof TextMessage) {
-                return toOrder((TextMessage) message);
-            } else if (message instanceof MapMessage) {
-                return toOrder((MapMessage) message);
-            } else if (message instanceof StreamMessage) {
-                return toOrder((StreamMessage) message);
-            }
+            String json = message.getBody(String.class);
+            return toOrder(json);
         } catch (JMSException | IOException e) {
             e.printStackTrace();
             return null;
         }
-        return null;
     }
 
-    private Order toOrder(TextMessage message) throws JMSException, IOException {
-        String json = message.getText();
-//        String json = message.getBody(String.class);
+    private Order toOrder(String json) throws IOException {
         return objectMapper.readValue(json, Order.class);
-    }
-
-    private Order toOrder(MapMessage message) throws JMSException {
-        Order order = new Order();
-        order.setOrderId(message.getString("orderId"));
-        order.setPresent(message.getBoolean("present"));
-        order.setShippingAddress(message.getString("shippingAddress"));
-        return order;
-    }
-
-    private Order toOrder(StreamMessage message) throws JMSException {
-        Order order = new Order();
-        order.setOrderId(message.readString());
-        order.setPresent(message.readBoolean());
-        order.setShippingAddress(message.readString());
-        return order;
     }
 }

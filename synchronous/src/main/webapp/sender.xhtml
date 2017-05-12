@@ -34,9 +34,12 @@
                              styleClass="form-control form-control-sm"/>
 
                 <span class="input-group-btn">
-                <h:commandButton action="#{sender.generateAndSendNewOrders}" value="Send orders" styleClass="btn btn-primary"/>
+                    <h:commandButton action="#{sender.generateAndSendNewOrders}" value="Send orders"
+                                     styleClass="btn btn-primary"/>
                 </span>
             </div>
+
+            <h:commandButton action="#{sender.clearSentOrders}" value="Clear" styleClass="btn btn-sm btn-secondary"/>
         </h:form>
 
         <h:dataTable value="#{sender.sentOrders}" var="order" styleClass="table table-sm">
