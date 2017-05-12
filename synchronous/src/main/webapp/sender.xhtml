@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="container">
+        <h1>Sender (Shopping)</h1>
+        <h:form>
+            <div class="form-group">
+                <h:outputLabel for="destination" value="Destination"/>
+                <h:selectOneMenu value="#{sender.configuration.destination}" id="destination"
+                                 styleClass="form-control form-control-sm">
+                    <f:selectItems value="#{values.availableDestinations}" var="availableDestination"
+                                   itemValue="#{availableDestination}" itemLabel="#{availableDestination.label}"/>
+                </h:selectOneMenu>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel for="message-type" value="Message type"/>
+                <h:selectOneMenu value="#{sender.configuration.messageType}" id="message-type"
+                                 styleClass="form-control form-control-sm">
+                    <f:selectItems value="#{values.availableMessageTypes}" var="availableMessageType"
+                                   itemValue="#{availableMessageType}" itemLabel="#{availableMessageType.label}"/>
+                </h:selectOneMenu>
+            </div>
+
+            <div class="input-group">
+                <h:inputText value="#{sender.orderCount}" placeholder="Order count" id="order-count"
+                             styleClass="form-control form-control-sm"/>
+
+                <span class="input-group-btn">
+                <h:commandButton action="#{sender.generateAndSendNewOrders}" value="Send orders" styleClass="btn btn-primary"/>
+                </span>
+            </div>
+        </h:form>
+
+        <h:dataTable value="#{sender.sentOrders}" var="order" styleClass="table table-sm">
+            <h:column>
+                <h:outputText value="#{order.orderId}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+</h:body>
+</html>

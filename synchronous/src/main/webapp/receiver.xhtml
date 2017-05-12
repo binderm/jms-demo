@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="container">
+        <h1>Receiver (Shipping/Billing)</h1>
+        <h:form>
+            <div class="row">
+                <div class="form-group col">
+                    <h:outputLabel for="destination" value="Destination"/>
+                    <h:selectOneMenu value="#{receiver.configuration.destination}" id="destination"
+                                     styleClass="form-control form-control-sm">
+                        <f:selectItems value="#{values.availableDestinations}" var="availableDestination"
+                                       itemValue="#{availableDestination}" itemLabel="#{availableDestination.label}"/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col">
+                    <label class="custom-control custom-checkbox">
+                        <h:selectBooleanCheckbox value="#{receiver.configuration.shared}"
+                                                 styleClass="custom-control-input form-control-sm"/>
+                        <span class="custom-control-indicator"/>
+                        <span class="custom-control-description">Shared</span>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                        <h:selectBooleanCheckbox value="#{receiver.configuration.durable}"
+                                                 styleClass="custom-control-input form-control-sm"/>
+                        <span class="custom-control-indicator"/>
+                        <span class="custom-control-description">Durable</span>
+                    </label>
+                </div>
+
+                <div class="form-group col">
+                    <h:outputLabel for="subscription-name" value="Subscription name"/>
+                    <h:inputText value="#{receiver.configuration.subscriptionName}" id="subscription-name"
+                                 styleClass="form-control form-control-sm"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col">
+                    <h:outputLabel for="timeout" value="Timeout"/>
+                    <h:selectOneMenu value="#{receiver.configuration.timeout}" id="timeout" styleClass="form-control form-control-sm">
+                        <f:selectItems value="#{values.availableTimeouts}"/>
+                    </h:selectOneMenu>
+                </div>
+
+                <div class="input-group">
+                    <h:inputText value="#{receiver.configuration.orderCount}" placeholder="Order count" id="order-count" styleClass="form-control form-control-sm"/>
+
+                    <span class="input-group-btn">
+                <h:commandButton action="#{receiver.receiveNewOrders}" value="Receive orders" styleClass="btn btn-primary"/>
+                </span>
+                </div>
+            </div>
+        </h:form>
+
+        <h:dataTable value="#{receiver.receivedOrders}" var="receivedOrder" styleClass="table table-sm">
+            <h:column>
+                <h:outputText value="#{receivedOrder.orderId}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+</h:body>
+</html>
