@@ -26,10 +26,6 @@ import java.io.IOException;
                 propertyValue = "Durable"
         ),
         @ActivationConfigProperty(
-                propertyName = "clientId",
-                propertyValue = "billing"
-        ),
-        @ActivationConfigProperty(
                 propertyName = "subscriptionName",
                 propertyValue = "createBillForNewOrder"
         )

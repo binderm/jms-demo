@@ -23,10 +23,6 @@ import javax.jms.MessageListener;
                 propertyValue = "Durable"
         ),
         @ActivationConfigProperty(
-                propertyName = "clientId",
-                propertyValue = "shipping"
-        ),
-        @ActivationConfigProperty(
                 propertyName = "subscriptionName",
                 propertyValue = "prepareShippingOfNewOrder"
         )
