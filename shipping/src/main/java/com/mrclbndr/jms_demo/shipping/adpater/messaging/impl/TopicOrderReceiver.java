@@ -1,4 +1,4 @@
-package com.mrclbndr.jms_demo.billing.adapter.messaging.impl;
+package com.mrclbndr.jms_demo.shipping.adpater.messaging.impl;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
