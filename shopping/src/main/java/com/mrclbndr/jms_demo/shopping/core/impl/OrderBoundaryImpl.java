@@ -10,8 +10,6 @@ import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,8 +18,6 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 @Stateless
 @Transactional(REQUIRES_NEW)
 public class OrderBoundaryImpl implements OrderBoundary {
-    private static final int ORDER_COUNT = 5;
-
     @Inject
     private OrderSender orderSender;
 
@@ -33,27 +29,20 @@ public class OrderBoundaryImpl implements OrderBoundary {
         return orderRepository.findAll();
     }
 
-    @Schedule(hour = "*", minute = "*", second = "0,30")
+    @Schedule(hour = "*", minute = "*", second = "*")
     public void generateAndSendOrders() {
-        List<Order> orders = generateOrders(ORDER_COUNT);
-        for (Order order : orders) {
-            orderSender.send(order);
-            orderRepository.add(order);
-        }
+        Order order = generateOrder();
+        orderSender.send(order);
+        System.out.printf("Sent order %s%n", order.getOrderId());
+        orderRepository.add(order);
     }
 
-    private List<Order> generateOrders(int orderCount) {
-        List<Order> orders = new LinkedList<>();
-
+    private Order generateOrder() {
         Random random = new Random();
         int idPrefix = random.nextInt(Integer.MAX_VALUE);
-        for (int i = 1; i <= orderCount; i++) {
-            Order order = new Order();
-            order.setOrderId(String.format("%08X-%04d", idPrefix, i));
-            orders.add(order);
-        }
-
-        return orders;
+        Order order = new Order();
+        order.setOrderId(String.format("%08X", idPrefix));
+        return order;
     }
 
     @Override
