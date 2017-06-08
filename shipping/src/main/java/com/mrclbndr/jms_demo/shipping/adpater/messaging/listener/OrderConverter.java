@@ -1,4 +1,4 @@
-package com.mrclbndr.jms_demo.shipping.adpater.messaging.impl;
+package com.mrclbndr.jms_demo.shipping.adpater.messaging.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrclbndr.jms_demo.shipping.domain.Order;

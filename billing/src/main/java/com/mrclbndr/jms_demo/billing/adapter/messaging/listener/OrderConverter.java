@@ -1,4 +1,4 @@
-package com.mrclbndr.jms_demo.billing.adapter.messaging.impl;
+package com.mrclbndr.jms_demo.billing.adapter.messaging.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrclbndr.jms_demo.billing.domain.Order;
