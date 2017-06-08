@@ -26,12 +26,23 @@ public class OrderReceiverProducer<OrderType> {
         switch (destinationType) {
             default:
             case QUEUE:
+                System.out.println("Receive from queue");
                 return queueOrderReceiver;
             case TOPIC:
-                return durableSubscription && sharedSubscription ? sharedDurableTopicOrderReceiver
-                        : durableSubscription ? durableTopicOrderReceiver
-                        : sharedSubscription ? sharedTopicOrderReceiver
-                        : topicOrderReceiver;
+                if (durableSubscription && sharedSubscription) {
+                    System.out.println("Receive from shared durable subscription");
+                    return sharedDurableTopicOrderReceiver;
+                }
+                if (durableSubscription) {
+                    System.out.println("Receive from non-shared durable subscription");
+                    return durableTopicOrderReceiver;
+                }
+                if (sharedSubscription) {
+                    System.out.println("Receive from shared non-durable subscription");
+                    return sharedTopicOrderReceiver;
+                }
+                System.out.println("Receive from non-durable non-shared subscription");
+                return topicOrderReceiver;
         }
     }
 }

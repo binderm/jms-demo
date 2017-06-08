@@ -5,19 +5,13 @@ import com.mrclbndr.jms_demo.commons.adapter.messaging.api.OrderReceiver;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSConsumer;
-import javax.jms.JMSContext;
 import java.io.IOException;
 import java.util.Optional;
 
 public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<OrderType> {
     @Inject
     Configuration configuration;
-
-    @Inject
-    @JMSConnectionFactory("jms/AppConnectionFactory")
-    private JMSContext jmsContext;
 
     private ObjectMapper objectMapper;
 
@@ -31,7 +25,7 @@ public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<
         long timeout = configuration.receiverTimeout();
         boolean noWait = timeout == 0L;
 
-        try (JMSConsumer consumer = createConsumer(jmsContext)) {
+        try (JMSConsumer consumer = createConsumer()) {
             String json = noWait
                     ? consumer.receiveBodyNoWait(String.class)
                     : consumer.receiveBody(String.class, timeout);
@@ -45,5 +39,5 @@ public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<
         return Optional.empty();
     }
 
-    abstract JMSConsumer createConsumer(JMSContext jmsContext);
+    abstract JMSConsumer createConsumer();
 }

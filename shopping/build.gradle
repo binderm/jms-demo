@@ -8,7 +8,17 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 war {
-    archiveName 'shopping.war'
+    archiveName 'shopping-all.war'
+}
+
+task syncWar(type: War, dependsOn: classes) {
+    archiveName 'shopping-sync.war'
+    rootSpec.exclude('**/BillAvailableListener.class')
+    rootSpec.exclude('**/ShippingStateChangedListener.class')
+}
+
+task asyncWar(type: War, dependsOn: classes) {
+    archiveName 'shopping-async.war'
 }
 
 repositories {
