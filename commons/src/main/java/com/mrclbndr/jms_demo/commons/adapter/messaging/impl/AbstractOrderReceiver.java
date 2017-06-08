@@ -5,15 +5,18 @@ import com.mrclbndr.jms_demo.commons.adapter.messaging.api.OrderReceiver;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import java.io.IOException;
 import java.util.Optional;
 
 public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<OrderType> {
-    private static final String PROP_RECEIVER_TIMEOUT = "jms_demo.receiver.timeout";
+    @Inject
+    Configuration configuration;
 
     @Inject
+    @JMSConnectionFactory("jms/AppConnectionFactory")
     private JMSContext jmsContext;
 
     private ObjectMapper objectMapper;
@@ -25,7 +28,7 @@ public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<
 
     @Override
     public Optional<OrderType> nextOrder(Class<OrderType> orderClazz) {
-        long timeout = Long.parseLong(System.getProperty(PROP_RECEIVER_TIMEOUT, "500"));
+        long timeout = configuration.receiverTimeout();
         boolean noWait = timeout == 0L;
 
         try (JMSConsumer consumer = createConsumer(jmsContext)) {

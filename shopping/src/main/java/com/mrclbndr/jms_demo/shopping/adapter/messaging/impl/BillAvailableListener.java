@@ -1,7 +1,6 @@
-package com.mrclbndr.jms_demo.shopping.adapter.messaging.listener;
+package com.mrclbndr.jms_demo.shopping.adapter.messaging.impl;
 
 import com.mrclbndr.jms_demo.shopping.core.api.OrderBoundary;
-import com.mrclbndr.jms_demo.shopping.domain.ShippingState;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -21,10 +20,10 @@ import javax.jms.MessageListener;
         ),
         @ActivationConfigProperty(
                 propertyName = "messageSelector",
-                propertyValue = "notificationType = 'SHIPPING_STATE_CHANGED'"
+                propertyValue = "notificationType = 'BILL_AVAILABLE'"
         )
 })
-public class ShippingStateChangedListener implements MessageListener {
+public class BillAvailableListener implements MessageListener {
     @Inject
     private OrderBoundary orderBoundary;
 
@@ -32,9 +31,7 @@ public class ShippingStateChangedListener implements MessageListener {
     public void onMessage(Message message) {
         try {
             String orderId = message.getStringProperty("orderId");
-            String shippingStateString = message.getStringProperty("updatedShippingState");
-            ShippingState shippingState = ShippingState.valueOf(shippingStateString);
-            orderBoundary.changeShippingState(orderId, shippingState);
+            orderBoundary.billAvailable(orderId);
         } catch (JMSException e) {
             e.printStackTrace();
         }

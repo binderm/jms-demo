@@ -9,12 +9,12 @@ import javax.jms.Topic;
 
 @Named
 @Dependent
-public class SharedTopicOrderReceiver extends AbstractSubscriptionOrderReceiver {
+public class SharedTopicOrderReceiver extends AbstractOrderReceiver {
     @Resource(lookup = "jms/NewOrdersTopic")
     private Topic newOrders;
 
     @Override
     JMSConsumer createConsumer(JMSContext jmsContext) {
-        return jmsContext.createSharedConsumer(newOrders, subscriptionName());
+        return jmsContext.createSharedConsumer(newOrders, configuration.subscriptionName());
     }
 }
