@@ -1,4 +1,4 @@
-package com.mrclbndr.jms_demo.shipping.adpater.messaging.impl;
+package com.mrclbndr.jms_demo.commons.adapter.messaging.impl;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
@@ -9,8 +9,8 @@ import javax.jms.JMSContext;
 
 @Named
 @Dependent
-public class TopicOrderReceiver extends AbstractOrderReceiver {
-    @Resource(lookup = "jms/NewOrdersTopic")
+public class QueueOrderReceiver extends AbstractOrderReceiver {
+    @Resource(lookup = "jms/NewOrdersQueue")
     private Destination newOrders;
 
     @Override

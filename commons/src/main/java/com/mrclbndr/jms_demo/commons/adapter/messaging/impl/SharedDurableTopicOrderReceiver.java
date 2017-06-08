@@ -1,4 +1,4 @@
-package com.mrclbndr.jms_demo.billing.adapter.messaging.impl;
+package com.mrclbndr.jms_demo.commons.adapter.messaging.impl;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
@@ -9,12 +9,12 @@ import javax.jms.Topic;
 
 @Named
 @Dependent
-public class SharedTopicOrderReceiver extends AbstractOrderReceiver {
+public class SharedDurableTopicOrderReceiver extends AbstractOrderReceiver {
     @Resource(lookup = "jms/NewOrdersTopic")
     private Topic newOrders;
 
     @Override
     JMSConsumer createConsumer(JMSContext jmsContext) {
-        return jmsContext.createSharedConsumer(newOrders, "billing");
+        return jmsContext.createSharedDurableConsumer(newOrders, "billing");
     }
 }

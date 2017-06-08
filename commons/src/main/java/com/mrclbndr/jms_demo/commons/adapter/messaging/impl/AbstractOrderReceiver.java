@@ -1,30 +1,33 @@
-package com.mrclbndr.jms_demo.billing.adapter.messaging.impl;
+package com.mrclbndr.jms_demo.commons.adapter.messaging.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mrclbndr.jms_demo.billing.adapter.messaging.api.OrderReceiver;
-import com.mrclbndr.jms_demo.billing.domain.Order;
+import com.mrclbndr.jms_demo.commons.adapter.messaging.api.OrderReceiver;
 
-import javax.annotation.Resource;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
-import javax.jms.Topic;
 import java.io.IOException;
 import java.util.Optional;
 
-public abstract class AbstractOrderReceiver implements OrderReceiver {
+public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<OrderType> {
     @Inject
     private JMSContext jmsContext;
 
-    @Resource(lookup = "jms/NewOrdersTopic")
-    private Topic newOrders;
+    private ObjectMapper objectMapper;
+
+    @PostConstruct
+    public void init() {
+        objectMapper = new ObjectMapper();
+    }
 
     @Override
-    public Optional<Order> nextOrder() {
+    public Optional<OrderType> nextOrder(Class<OrderType> orderClazz) {
         try (JMSConsumer consumer = createConsumer(jmsContext)) {
             String json = consumer.receiveBody(String.class, 500L);
             if (json != null) {
-                return Optional.of(new ObjectMapper().readValue(json, Order.class));
+                OrderType order = objectMapper.readValue(json, orderClazz);
+                return Optional.of(order);
             }
         } catch (IOException e) {
             e.printStackTrace();

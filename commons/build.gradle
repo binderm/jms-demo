@@ -2,22 +2,15 @@ group 'com.mrclbndr'
 version '1.0.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'war'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-war {
-    archiveName 'billing.war'
-}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile project(':commons')
     compile 'javax:javaee-api:7.0'
-    compile 'org.apache.commons:commons-lang3:3.5'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.8.1'
 }
