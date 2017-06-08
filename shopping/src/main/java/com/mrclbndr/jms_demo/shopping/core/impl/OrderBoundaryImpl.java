@@ -1,5 +1,6 @@
 package com.mrclbndr.jms_demo.shopping.core.impl;
 
+import com.mrclbndr.jms_demo.shopping.adapter.messaging.api.ConfigurationDependent;
 import com.mrclbndr.jms_demo.shopping.adapter.messaging.api.OrderSender;
 import com.mrclbndr.jms_demo.shopping.adapter.persistence.api.OrderRepository;
 import com.mrclbndr.jms_demo.shopping.core.api.OrderBoundary;
@@ -19,6 +20,7 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 @Transactional(REQUIRES_NEW)
 public class OrderBoundaryImpl implements OrderBoundary {
     @Inject
+    @ConfigurationDependent
     private OrderSender orderSender;
 
     @Inject

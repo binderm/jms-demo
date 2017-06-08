@@ -7,16 +7,19 @@ import com.mrclbndr.jms_demo.shopping.domain.Order;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.jms.Destination;
 import javax.jms.JMSContext;
 
-@Stateless
-public class OrderSenderImpl implements OrderSender {
+@Named
+@Dependent
+public class TopicOrderSender implements OrderSender {
     @Inject
     private JMSContext jmsContext;
 
-    @Resource(lookup = "jms/NewOrders")
+    @Resource(lookup = "jms/NewOrdersTopic")
     private Destination newOrders;
 
     private final ObjectMapper objectMapper = new ObjectMapper();

@@ -1,17 +1,15 @@
 package com.mrclbndr.jms_demo.billing.core.impl;
 
+import com.mrclbndr.jms_demo.billing.adapter.messaging.api.CustomerNotifier;
 import com.mrclbndr.jms_demo.billing.adapter.messaging.api.OrderReceiver;
+import com.mrclbndr.jms_demo.billing.adapter.messaging.api.ConfigurationDependent;
 import com.mrclbndr.jms_demo.billing.core.api.BillBoundary;
 import com.mrclbndr.jms_demo.billing.domain.Order;
-import com.mrclbndr.jms_demo.billing.adapter.messaging.api.CustomerNotifier;
 
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-
-import java.util.Optional;
-import java.util.Random;
 
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
@@ -19,6 +17,7 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 @Transactional(REQUIRES_NEW)
 public class BillBoundaryImpl implements BillBoundary {
     @Inject
+    @ConfigurationDependent
     private OrderReceiver orderReceiver;
 
     @Inject

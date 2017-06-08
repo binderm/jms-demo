@@ -8,24 +8,24 @@ import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jms.Destination;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
+import javax.jms.Topic;
 import java.io.IOException;
 import java.util.Optional;
 
 @Named
 @Dependent
-public class OrderReceiverImpl implements OrderReceiver {
+public class DurableTopicOrderReceiver implements OrderReceiver {
     @Inject
     private JMSContext jmsContext;
 
-    @Resource(lookup = "jms/NewOrders")
-    private Destination newOrders;
+    @Resource(lookup = "jms/NewOrdersTopic")
+    private Topic newOrders;
 
     @Override
     public Optional<Order> nextOrder() {
-        try (JMSConsumer consumer = jmsContext.createConsumer(newOrders)) {
+        try (JMSConsumer consumer = jmsContext.createDurableConsumer(newOrders, "billing")) {
             String json = consumer.receiveBody(String.class, 500L);
             if (json != null) {
                 return Optional.of(new ObjectMapper().readValue(json, Order.class));
