@@ -28,7 +28,7 @@ RUN ${ASADMIN} start-domain && \
     ${ASADMIN} set configs.config.server-config.jms-service.default-jms-host=jms_demo_master && \
     ${ASADMIN} stop-domain
 
-COPY build/libs/shopping-sync.war $DOMAIN_HOME/autodeploy
+COPY build/libs/shopping-async.war $DOMAIN_HOME/autodeploy
 CMD ["mkdir","-p","/home/payara/config"]
 
 EXPOSE 7676
