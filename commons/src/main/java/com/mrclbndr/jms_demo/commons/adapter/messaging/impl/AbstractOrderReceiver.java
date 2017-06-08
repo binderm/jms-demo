@@ -26,9 +26,12 @@ public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<
     @Override
     public Optional<OrderType> nextOrder(Class<OrderType> orderClazz) {
         long timeout = Long.parseLong(System.getProperty(PROP_RECEIVER_TIMEOUT, "500"));
+        boolean noWait = timeout == 0L;
 
         try (JMSConsumer consumer = createConsumer(jmsContext)) {
-            String json = consumer.receiveBody(String.class, timeout);
+            String json = noWait
+                    ? consumer.receiveBodyNoWait(String.class)
+                    : consumer.receiveBody(String.class, timeout);
             if (json != null) {
                 OrderType order = objectMapper.readValue(json, orderClazz);
                 return Optional.of(order);
