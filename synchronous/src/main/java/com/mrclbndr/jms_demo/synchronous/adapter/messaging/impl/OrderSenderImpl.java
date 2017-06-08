@@ -11,6 +11,7 @@ import com.mrclbndr.jms_demo.synchronous.domain.SenderConfiguration;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.jms.BytesMessage;
 import javax.jms.Destination;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
@@ -51,6 +52,8 @@ public class OrderSenderImpl implements OrderSender {
                     return toMapMessage(order);
                 case STREAM_MESSAGE:
                     return toStreamMessage(order);
+                case BYTES_MESSAGE:
+                    return toBytesMessage(order);
             }
         } catch (JsonProcessingException | JMSException e) {
             return null;
@@ -58,7 +61,7 @@ public class OrderSenderImpl implements OrderSender {
     }
 
     private Message toTextMessage(Order order) throws JsonProcessingException {
-        String json = objectMapper.writeValueAsString(order);
+        String json = toJson(order);
         return jmsContext.createTextMessage(json);
     }
 
@@ -90,6 +93,16 @@ public class OrderSenderImpl implements OrderSender {
             message.writeInt(item.getQuantity());
         }
         return message;
+    }
+
+    private Message toBytesMessage(Order order) throws JsonProcessingException, JMSException {
+        BytesMessage message = jmsContext.createBytesMessage();
+        message.writeBytes(toJson(order).getBytes());
+        return message;
+    }
+
+    private String toJson(Object object) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(object);
     }
 
     private Destination destinationForConfiguration(SenderConfiguration configuration) {

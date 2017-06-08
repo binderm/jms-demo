@@ -5,7 +5,7 @@ public enum MessageType implements Selectable {
     OBJECT_MESSAGE("ObjectMessage"),
     MAP_MESSAGE("MapMessage"),
     STREAM_MESSAGE("StreamMessage"),
-    BYTE_MESSAGE("ByteMessage");
+    BYTES_MESSAGE("ByteMessage");
 
     private final String label;
 

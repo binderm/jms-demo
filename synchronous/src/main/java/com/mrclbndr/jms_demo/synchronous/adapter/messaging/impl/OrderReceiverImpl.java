@@ -8,6 +8,7 @@ import com.mrclbndr.jms_demo.synchronous.domain.ReceiverConfiguration;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.jms.BytesMessage;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
@@ -111,7 +112,7 @@ public class OrderReceiverImpl implements OrderReceiver {
 
     private Order toOrder(TextMessage message) throws JMSException, IOException {
         String json = message.getText();
-        return objectMapper.readValue(json, Order.class);
+        return fromJson(json, Order.class);
     }
 
     private Order toOrder(ObjectMessage message) throws JMSException {
@@ -132,5 +133,21 @@ public class OrderReceiverImpl implements OrderReceiver {
         order.setPresent(message.readBoolean());
         order.setShippingAddress(message.readString());
         return order;
+    }
+
+    private Order toOrder(BytesMessage message) throws JMSException {
+        StringBuilder json = new StringBuilder();
+        byte[] buffer = new byte[1024];
+        Order order = new Order();
+        int bytesRead = message.readBytes(buffer);
+        while (bytesRead >= 0) {
+            json.append(new String(buffer, 0, bytesRead));
+            bytesRead = message.readBytes(buffer);
+        }
+        return order;
+    }
+
+    private <T> T fromJson(String json, Class<T> clazz) throws IOException {
+        return objectMapper.readValue(json, clazz);
     }
 }
