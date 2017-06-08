@@ -1,4 +1,4 @@
-package com.mrclbndr.jms_demo.billing.adapter.messaging.listener;
+package com.mrclbndr.jms_demo.billing.adapter.messaging.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrclbndr.jms_demo.billing.domain.Order;
@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
-import javax.jms.ObjectMessage;
 import javax.jms.StreamMessage;
 import javax.jms.TextMessage;
 import java.io.IOException;

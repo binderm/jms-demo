@@ -8,7 +8,17 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 war {
-    archiveName 'billing.war'
+    archiveName 'billing-all.war'
+}
+
+task syncWar(type: War, dependsOn: classes) {
+    archiveName 'billing-sync.war'
+    rootSpec.exclude('**/NewOrderListener.class')
+}
+
+task asyncWar(type: War, dependsOn: classes) {
+    archiveName 'billing-async.war'
+    rootSpec.exclude('**/CreateBillForNewOrderJob.class')
 }
 
 repositories {

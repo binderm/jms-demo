@@ -7,7 +7,6 @@ import com.mrclbndr.jms_demo.shipping.core.api.ShippingBoundary;
 import com.mrclbndr.jms_demo.shipping.domain.Order;
 import com.mrclbndr.jms_demo.shipping.domain.ShippingState;
 
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -24,7 +23,7 @@ public class ShippingBoundaryImpl implements ShippingBoundary {
     @Inject
     private CustomerNotifier customerNotifier;
 
-    @Schedule(hour = "*", minute = "*", second = "0/4")
+    @Override
     public void prepareShipping() {
         orderReceiver.nextOrder(Order.class)
                 .ifPresent(this::prepareShipping);

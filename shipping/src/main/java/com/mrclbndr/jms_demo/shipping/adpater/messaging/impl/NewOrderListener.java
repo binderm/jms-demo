@@ -1,4 +1,4 @@
-package com.mrclbndr.jms_demo.shipping.adpater.messaging.listener;
+package com.mrclbndr.jms_demo.shipping.adpater.messaging.impl;
 
 import com.mrclbndr.jms_demo.shipping.core.api.ShippingBoundary;
 import com.mrclbndr.jms_demo.shipping.domain.Order;
@@ -10,7 +10,7 @@ import javax.jms.MessageListener;
 //@MessageDriven(activationConfig = {
 //        @ActivationConfigProperty(
 //                propertyName = "destinationLookup",
-//                propertyValue = "jms/NewOrders"
+//                propertyValue = "jms/NewOrdersTopic"
 //        ),
 //        @ActivationConfigProperty(
 //                propertyName = "destinationType",

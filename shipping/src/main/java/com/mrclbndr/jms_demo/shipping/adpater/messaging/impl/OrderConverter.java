@@ -1,15 +1,11 @@
-package com.mrclbndr.jms_demo.shipping.adpater.messaging.listener;
+package com.mrclbndr.jms_demo.shipping.adpater.messaging.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrclbndr.jms_demo.shipping.domain.Order;
 
 import javax.ejb.Stateless;
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
 import javax.jms.Message;
-import javax.jms.ObjectMessage;
-import javax.jms.StreamMessage;
-import javax.jms.TextMessage;
 import java.io.IOException;
 
 @Stateless

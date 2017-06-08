@@ -8,7 +8,17 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 war {
-    archiveName 'shipping.war'
+    archiveName 'shipping-all.war'
+}
+
+task syncWar(type: War, dependsOn: classes) {
+    archiveName 'shipping-sync.war'
+    rootSpec.exclude('**/NewOrderListener.class')
+}
+
+task asyncWar(type: War, dependsOn: classes) {
+    archiveName 'shipping-async.war'
+    rootSpec.exclude('**/PrepareShippingForNewOrderJob.class')
 }
 
 repositories {

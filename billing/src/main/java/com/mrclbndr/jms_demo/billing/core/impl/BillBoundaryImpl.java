@@ -6,7 +6,6 @@ import com.mrclbndr.jms_demo.billing.core.api.BillBoundary;
 import com.mrclbndr.jms_demo.billing.domain.Order;
 import com.mrclbndr.jms_demo.commons.adapter.messaging.api.OrderReceiver;
 
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -23,7 +22,7 @@ public class BillBoundaryImpl implements BillBoundary {
     @Inject
     private CustomerNotifier customerNotifier;
 
-    @Schedule(hour = "*", minute = "*", second = "0/4")
+    @Override
     public void createBill() {
         orderReceiver.nextOrder(Order.class)
                 .ifPresent(this::createBill);

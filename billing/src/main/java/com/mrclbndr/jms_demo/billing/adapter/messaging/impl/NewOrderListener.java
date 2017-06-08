@@ -1,33 +1,35 @@
-package com.mrclbndr.jms_demo.billing.adapter.messaging.listener;
+package com.mrclbndr.jms_demo.billing.adapter.messaging.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrclbndr.jms_demo.billing.core.api.BillBoundary;
 import com.mrclbndr.jms_demo.billing.domain.Order;
 
+import javax.ejb.ActivationConfigProperty;
+import javax.ejb.MessageDriven;
 import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import java.io.IOException;
 
-//@MessageDriven(activationConfig = {
-//        @ActivationConfigProperty(
-//                propertyName = "destinationLookup",
-//                propertyValue = "jms/NewOrders"
-//        ),
-//        @ActivationConfigProperty(
-//                propertyName = "destinationType",
-//                propertyValue = "javax.jms.Topic"
-//        ),
-//        @ActivationConfigProperty(
-//                propertyName = "subscriptionDurability",
-//                propertyValue = "Durable"
-//        ),
-//        @ActivationConfigProperty(
-//                propertyName = "subscriptionName",
-//                propertyValue = "createBillForNewOrder"
-//        )
-//})
+@MessageDriven(activationConfig = {
+        @ActivationConfigProperty(
+                propertyName = "destinationLookup",
+                propertyValue = "jms/NewOrdersTopic"
+        ),
+        @ActivationConfigProperty(
+                propertyName = "destinationType",
+                propertyValue = "javax.jms.Topic"
+        ),
+        @ActivationConfigProperty(
+                propertyName = "subscriptionDurability",
+                propertyValue = "Durable"
+        ),
+        @ActivationConfigProperty(
+                propertyName = "subscriptionName",
+                propertyValue = "createBillForNewOrder"
+        )
+})
 public class NewOrderListener implements MessageListener {
     @Inject
     private OrderConverter orderConverter;
