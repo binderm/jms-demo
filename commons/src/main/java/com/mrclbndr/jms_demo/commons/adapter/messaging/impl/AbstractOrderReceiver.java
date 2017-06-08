@@ -12,7 +12,6 @@ import java.util.Optional;
 
 public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<OrderType> {
     private static final String PROP_RECEIVER_TIMEOUT = "jms_demo.receiver.timeout";
-    private static final String DEFAULT_RECEIVER_TIMEOUT = "500";
 
     @Inject
     private JMSContext jmsContext;
@@ -26,7 +25,7 @@ public abstract class AbstractOrderReceiver<OrderType> implements OrderReceiver<
 
     @Override
     public Optional<OrderType> nextOrder(Class<OrderType> orderClazz) {
-        long timeout = Long.parseLong(System.getProperty(PROP_RECEIVER_TIMEOUT, DEFAULT_RECEIVER_TIMEOUT));
+        long timeout = Long.parseLong(System.getProperty(PROP_RECEIVER_TIMEOUT, "500"));
 
         try (JMSConsumer consumer = createConsumer(jmsContext)) {
             String json = consumer.receiveBody(String.class, timeout);

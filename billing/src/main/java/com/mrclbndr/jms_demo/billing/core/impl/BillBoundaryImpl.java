@@ -23,7 +23,7 @@ public class BillBoundaryImpl implements BillBoundary {
     @Inject
     private CustomerNotifier customerNotifier;
 
-    @Schedule(hour = "*", minute = "*", second = "0/10")
+    @Schedule(hour = "*", minute = "*", second = "0/4")
     public void createBill() {
         orderReceiver.nextOrder(Order.class)
                 .ifPresent(this::createBill);

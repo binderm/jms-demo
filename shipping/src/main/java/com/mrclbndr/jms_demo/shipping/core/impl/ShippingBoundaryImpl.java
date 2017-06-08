@@ -24,7 +24,7 @@ public class ShippingBoundaryImpl implements ShippingBoundary {
     @Inject
     private CustomerNotifier customerNotifier;
 
-    @Schedule(hour = "*", minute = "*", second = "0/5")
+    @Schedule(hour = "*", minute = "*", second = "0/4")
     public void prepareShipping() {
         orderReceiver.nextOrder(Order.class)
                 .ifPresent(this::prepareShipping);
