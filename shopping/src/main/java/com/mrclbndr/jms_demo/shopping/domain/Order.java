@@ -7,31 +7,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mrclbndr.jms_demo.shopping.domain.Order.FIND_ALL_ORDERS;
-
-@Entity
-@Table(name = "ORDERS")
-@NamedQueries({
-        @NamedQuery(name = FIND_ALL_ORDERS, query = "select o from Order o")
-})
 public class Order {
-    public static final String FIND_ALL_ORDERS = "findAllOrders";
-
-    @Id
     @JsonProperty("orderId")
     private String orderId;
 
-    @Transient
     @JsonProperty("items")
     private List<OrderItem> items = new ArrayList<>();
 
@@ -47,7 +29,6 @@ public class Order {
     @JsonIgnore
     private boolean billAvailable;
 
-    @Enumerated
     @JsonIgnore
     private ShippingState shippingState = ShippingState.IN_PREPARATION;
 

@@ -33,7 +33,7 @@ public class ShippingBoundaryImpl implements ShippingBoundary {
     @Override
     public void prepareShipping(Order order) {
         String orderId = order.getOrderId();
-        System.out.printf("Prepare shipping for order %s%n", orderId);
+        System.out.printf("Prepare shipping for order '%s'%n", orderId);
         customerNotifier.shippingStateChanged(orderId, ShippingState.SHIPPING_ISSUED);
     }
 }

@@ -32,7 +32,7 @@ public class BillBoundaryImpl implements BillBoundary {
     @Override
     public void createBill(Order order) {
         String orderId = order.getOrderId();
-        System.out.printf("Create bill for order %s%n", orderId);
+        System.out.printf("Create bill for order '%s'%n", orderId);
         customerNotifier.billAvailable(orderId);
     }
 }
