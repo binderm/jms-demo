@@ -1,11 +1,9 @@
 #!/bin/bash
-war="../$1/build/libs/$1-$2.war"
+war="$(pwd)/../$1/build/libs/$1-$2.war"
 config="$1.properties"
 
-docker run -it --net jms-demo jms-demo-slave
-bg
+container_id=$(docker run -d -P --net jms-demo jms-demo-slave)
 docker cp $config $container_id:/config.properties
 docker cp $war $container_id:/opt/payara41/glassfish/domains/domain1/autodeploy/
-fg
-#sudo docker logs -f $container_id
+sudo docker logs -f $container_id
 
