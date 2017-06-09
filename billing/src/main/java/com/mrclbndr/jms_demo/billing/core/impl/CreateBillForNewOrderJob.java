@@ -11,7 +11,7 @@ public class CreateBillForNewOrderJob {
     @Inject
     private BillBoundary billBoundary;
 
-    @Schedule(hour = "*", minute = "*", second = "0/4")
+    @Schedule(hour = "*", minute = "*", second = "0/2")
     public void createBillForNewOrder() {
         billBoundary.createBill();
     }

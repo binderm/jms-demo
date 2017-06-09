@@ -11,7 +11,7 @@ public class PrepareShippingForNewOrderJob {
     @Inject
     private ShippingBoundary shippingBoundary;
 
-    @Schedule(hour = "*", minute = "*", second = "0/4")
+    @Schedule(hour = "*", minute = "*", second = "0/2")
     public void prepareShippingForNewOrder() {
         shippingBoundary.prepareShipping();
     }

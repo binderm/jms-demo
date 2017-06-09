@@ -23,7 +23,7 @@ public class OrderBoundaryImpl implements OrderBoundary {
     @ConfigurationDependent
     private OrderSender orderSender;
 
-    @Schedule(hour = "*", minute = "*", second = "*")
+    @Schedule(hour = "*", minute = "*", second = "0/2")
     public void generateAndSendOrders() {
         Order order = generateOrder();
         orderSender.send(order);
