@@ -1,5 +1,6 @@
 # jms-demo
 Java EE applications for demonstration of the Java Message Service (JMS) API.
+Created as part of a seminar paper for the course [Aktuelle Technologien zur Entwicklung verteilter Java-Anwendungen](https://tschutschu.de/ss2017.html) at [Munich University of Applied Sciences](http://cs.hm.edu).
 
 The project consists of the following sub-projects:
 * synchronous
