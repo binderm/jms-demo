@@ -30,4 +30,6 @@ RUN ${ASADMIN} start-domain && \
 
 EXPOSE 7676
 
+COPY
+
 ENTRYPOINT ${ASADMIN} start-domain -v ${DOMAIN}
